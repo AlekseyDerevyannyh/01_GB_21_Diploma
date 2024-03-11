@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://172.16.1.121:5432/task
+    username: task
+    password: secret
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+#      ddl-auto: update
+      ddl-auto: create-drop
+    show-sql: true
