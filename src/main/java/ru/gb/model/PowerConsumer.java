@@ -2,17 +2,19 @@ package ru.gb.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Электропотребитель
  */
 @Entity
-@Table(name = "power_consumers")
+@Table(name = "POWER_CONSUMERS")
 @Data
+@NoArgsConstructor
 public class PowerConsumer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;                    // id потребителя
+    private Long id;                    // идентификатор потребителя
 
     @Column(name = "name")
     private String name;                // наименование потребителя
@@ -32,7 +34,7 @@ public class PowerConsumer {
     @Column(name = "power_factor")
     private Double powerFactor;         // коэффициент мощности (cos(Fi))
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "role")
+@Table(name = "ROLES")
 @Data
 //public class Role implements GrantedAuthority {
 public class Role {
@@ -16,9 +16,10 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
+//    @Column(name = "users")
     @ManyToMany(fetch = FetchType.EAGER,
         cascade = CascadeType.ALL,
         mappedBy = "roles")

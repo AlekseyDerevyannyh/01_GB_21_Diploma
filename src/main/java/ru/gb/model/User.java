@@ -7,19 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 @Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "login", nullable = false)
+    private String login;
 
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "patronymic", nullable = false)
+    private String patronymic;
+
+//    @Column(name = "roles")
     @ManyToMany(fetch = FetchType.EAGER,
         cascade = CascadeType.ALL)
     @JoinTable(
@@ -31,9 +41,12 @@ public class User {
     public User() {
     }
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(String login, String password, String lastName, String firstName, String patronymic) {
+        this.login = login;
         this.password = password;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
     }
 
     public void addRole(Role role) {
