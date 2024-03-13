@@ -48,4 +48,13 @@ public class Task {
     @Column(name = "receivedAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime receivedAt;   // дата получения задания
 
+    public Task(String name, String stage, String department, String description, User userIssued, User userReceived) {
+        this.name = name;
+        this.stage = stage;
+        this.department = department;
+        this.description = description;
+        this.userIssued = userIssued;
+        this.userReceived = userReceived;
+        this.issuedAt = LocalDateTime.now();
+    }
 }
