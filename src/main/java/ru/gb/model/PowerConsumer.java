@@ -10,19 +10,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "POWER_CONSUMERS")
 @Data
-@NoArgsConstructor
 public class PowerConsumer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                    // идентификатор потребителя
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;                // наименование потребителя
 
-    @Column(name = "power_supply_category")
+    @Column(name = "power_supply_category", nullable = false)
     private String powerSupplyCategory; // требуемая категория электроснабжения по ПУЭ
 
-    @Column(name = "location")
+    @Column(name = "location", nullable = false)
     private String location;            // расположение потребителя (№ помещения на плане)
 
     @Column(name = "power")
@@ -34,7 +33,9 @@ public class PowerConsumer {
     @Column(name = "power_factor")
     private Double powerFactor;         // коэффициент мощности (cos(Fi))
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "task_id", nullable = false)
-    private Task task;
+//    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+//    @JoinColumn(name = "task_id", nullable = false)
+//    private Task task;
+
+    public PowerConsumer() {}
 }
