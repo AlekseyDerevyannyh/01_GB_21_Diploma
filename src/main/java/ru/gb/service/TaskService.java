@@ -2,8 +2,10 @@ package ru.gb.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.gb.dto.TaskDto;
 import ru.gb.model.Status;
 import ru.gb.model.Task;
+import ru.gb.model.User;
 import ru.gb.repository.TaskRepository;
 
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final UserService userService;
 
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
@@ -27,8 +30,8 @@ public class TaskService {
         return task;
     }
 
-    public Task addTask(Task task) {
-        return taskRepository.save(task);
+    public Task addTask(TaskDto taskDto) {
+        return taskRepository.save(convertTaskDtoToTask(taskDto));
     }
 
     public void deleteTask(Long id) {
@@ -73,6 +76,19 @@ public class TaskService {
         task.setCompletedAt(LocalDateTime.now());
         task.setStatus(Status.COMPLETED);
         taskRepository.save(task);
+        return task;
+    }
+
+    private Task convertTaskDtoToTask(TaskDto taskDto) {
+        User userAccepted = userService.getUserByFullName(taskDto.getUserAcceptedLastName(), taskDto.getUserAcceptedFirstName(), taskDto.getUserAcceptedPatronymic()).orElseThrow();
+
+        Task task = new Task();
+        task.setName(taskDto.getName());
+        task.setStage(taskDto.getStage());
+        task.setDepartment(taskDto.getDepartment());
+        task.setDescription(taskDto.getDescription());
+        task.setPowerConsumers(taskDto.getPowerConsumers());
+        task.setUserAccepted(userAccepted);
         return task;
     }
 }

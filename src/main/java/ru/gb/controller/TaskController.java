@@ -3,6 +3,7 @@ package ru.gb.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.gb.dto.TaskDto;
 import ru.gb.model.Task;
 import ru.gb.service.TaskService;
 
@@ -24,8 +25,14 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> addTask(@RequestBody Task task) {
-        return new ResponseEntity<>(taskService.addTask(task), HttpStatus.CREATED);
+    public ResponseEntity<Task> addTask(@RequestBody TaskDto taskDto) {
+        Task task;
+        try {
+            task = taskService.addTask(taskDto);
+        } catch (NoSuchElementException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(task, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

@@ -17,11 +17,20 @@ public class UserService {
     private final RoleRepository roleRepository;
 
     public User addUser(User user) {
-        return userRepository.save(user);
+        if (userRepository.findByLastNameAndFirstNameAndPatronymic(
+                user.getLastName(), user.getFirstName(), user.getPatronymic())
+                .isEmpty()) {
+            return userRepository.save(user);
+        }
+        return user;
     }
 
     public Optional<User> getUserByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    public Optional<User> getUserByFullName(String lastName, String firstName, String patronymic) {
+        return userRepository.findByLastNameAndFirstNameAndPatronymic(lastName, firstName, patronymic);
     }
 
     public void addRoleToUser(Long userId, Long roleId) {
