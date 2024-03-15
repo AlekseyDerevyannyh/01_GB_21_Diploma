@@ -43,8 +43,8 @@ public class Task {
     @Column(name = "issuedAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime issuedAt;     // дата выдачи задания
 
-//    @ManyToOne
-//    private User userAccepted;  // пользователь, принявший задание
+    @ManyToOne
+    private User userAccepted;  // пользователь, принявший задание
 
     @Column(name = "receivedAt", columnDefinition = "TIMESTAMP")
     private LocalDateTime acceptedAt;   // дата получения задания
