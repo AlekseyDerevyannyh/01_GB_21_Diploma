@@ -23,6 +23,11 @@ public class TaskController {
         return new ResponseEntity<>(taskService.getAllTasks(), HttpStatus.OK);
     }
 
+    @PostMapping
+    public ResponseEntity<Task> addTask(@RequestBody Task task) {
+        return new ResponseEntity<>(taskService.addTask(task), HttpStatus.CREATED);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         Task task;
@@ -34,14 +39,49 @@ public class TaskController {
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Task> addTask(@RequestBody Task task) {
-        return new ResponseEntity<>(taskService.addTask(task), HttpStatus.CREATED);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping("/{id}/accept")
+    public ResponseEntity<Task> acceptTask(@PathVariable Long id) {
+        Task task;
+        try {
+            task = taskService.acceptTask(id);
+        } catch (NoSuchElementException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(task, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/cancel")
+    public ResponseEntity<Task> cancelTask(@PathVariable Long id) {
+        Task task;
+        try {
+            task = taskService.cancelTask(id);
+        } catch (NoSuchElementException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(task, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/complete")
+    public ResponseEntity<Task> completeTask(@PathVariable Long id) {
+        Task task;
+        try {
+            task = taskService.completeTask(id);
+        } catch (NoSuchElementException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(task, HttpStatus.OK);
+    }
+
 }
