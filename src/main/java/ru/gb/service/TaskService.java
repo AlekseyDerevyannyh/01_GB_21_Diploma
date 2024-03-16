@@ -3,6 +3,8 @@ package ru.gb.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gb.dto.TaskDto;
+import ru.gb.dto.TaskDtoOut;
+import ru.gb.dto.UserDto;
 import ru.gb.model.Status;
 import ru.gb.model.Task;
 import ru.gb.model.User;
@@ -80,7 +82,8 @@ public class TaskService {
     }
 
     private Task convertTaskDtoToTask(TaskDto taskDto) {
-        User userAccepted = userService.getUserByFullName(taskDto.getUserAcceptedLastName(), taskDto.getUserAcceptedFirstName(), taskDto.getUserAcceptedPatronymic()).orElseThrow();
+        User userAccepted = userService.getUserByFullName(taskDto.getUserAcceptedLastName(), taskDto.getUserAcceptedFirstName(), taskDto.getUserAcceptedPatronymic()).orElseThrow(
+                () -> new NoSuchElementException("Пользователь не найден!"));
 
         Task task = new Task();
         task.setName(taskDto.getName());
@@ -91,4 +94,5 @@ public class TaskService {
         task.setUserAccepted(userAccepted);
         return task;
     }
+
 }

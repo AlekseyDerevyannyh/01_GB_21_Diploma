@@ -1,9 +1,12 @@
 package ru.gb.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.dto.TaskDto;
+import ru.gb.dto.TaskDtoOut;
+import ru.gb.mapper.Mapper;
 import ru.gb.model.Task;
 import ru.gb.service.TaskService;
 
@@ -15,35 +18,42 @@ import java.util.NoSuchElementException;
 public class TaskController {
     private final TaskService taskService;
 
+    @Autowired
+    private Mapper mapper;
+
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
-        return new ResponseEntity<>(taskService.getAllTasks(), HttpStatus.OK);
+    public ResponseEntity<List<TaskDtoOut>> getAllTasks() {
+        return new ResponseEntity<>(taskService.getAllTasks()
+                .stream()
+                .map(task -> mapper.convertTaskToTaskDtoOut(task))
+                .toList(),
+                HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Task> addTask(@RequestBody TaskDto taskDto) {
+    public ResponseEntity<TaskDtoOut> addTask(@RequestBody TaskDto taskDto) {
         Task task;
         try {
             task = taskService.addTask(taskDto);
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(task, HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoOut> getTaskById(@PathVariable Long id) {
         Task task;
         try {
             task = taskService.getTaskById(id);
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(task, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -53,7 +63,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}/accept")
-    public ResponseEntity<Task> acceptTask(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoOut> acceptTask(@PathVariable Long id) {
         Task task;
         try {
             task = taskService.acceptTask(id);
@@ -62,11 +72,11 @@ public class TaskController {
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(task, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
 
     @PutMapping("/{id}/cancel")
-    public ResponseEntity<Task> cancelTask(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoOut> cancelTask(@PathVariable Long id) {
         Task task;
         try {
             task = taskService.cancelTask(id);
@@ -75,11 +85,11 @@ public class TaskController {
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(task, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
 
     @PutMapping("/{id}/complete")
-    public ResponseEntity<Task> completeTask(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoOut> completeTask(@PathVariable Long id) {
         Task task;
         try {
             task = taskService.completeTask(id);
@@ -88,7 +98,7 @@ public class TaskController {
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(task, HttpStatus.OK);
+        return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
 
 }
