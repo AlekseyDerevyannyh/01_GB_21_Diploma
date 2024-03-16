@@ -1,25 +1,31 @@
 package ru.gb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 //import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ROLES")
-@Data
+@Getter
+@Setter
 //public class Role implements GrantedAuthority {
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
 //    @Column(name = "users")
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER,
         cascade = CascadeType.ALL,
         mappedBy = "roles")
@@ -34,6 +40,26 @@ public class Role {
 
 //    @Override
 //    public String getAuthority() {
-//        return name;
+//        return login;
 //    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role role)) return false;
+        return Objects.equals(getName(), role.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

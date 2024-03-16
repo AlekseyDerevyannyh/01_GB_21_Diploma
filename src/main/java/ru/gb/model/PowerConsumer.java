@@ -2,14 +2,17 @@ package ru.gb.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Электропотребитель
  */
 @Entity
 @Table(name = "POWER_CONSUMERS")
-@Data
+@Getter
+@Setter
 public class PowerConsumer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

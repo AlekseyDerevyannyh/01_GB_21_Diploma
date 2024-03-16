@@ -1,20 +1,22 @@
 package ru.gb.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "USERS")
-@Data
+@Getter
+@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "login", nullable = false)
+    @Column(name = "login", nullable = false, unique = true)
     private String login;
 
     @Column(name = "password", nullable = false)
@@ -29,9 +31,15 @@ public class User {
     @Column(name = "patronymic", nullable = false)
     private String patronymic;
 
-//    @Column(name = "roles")
     @ManyToMany(fetch = FetchType.EAGER,
         cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "users_role",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"),
+//            uniqueConstraints = {@UniqueConstraint(
+//                    columnNames = {"user_id", "role_id"}
+//            )})
     @JoinTable(
             name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
