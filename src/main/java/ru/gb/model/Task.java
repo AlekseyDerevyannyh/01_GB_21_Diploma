@@ -2,6 +2,8 @@ package ru.gb.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -13,7 +15,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "TASKS")
-@Data
+@Getter
+@Setter
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
