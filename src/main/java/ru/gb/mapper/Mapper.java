@@ -14,7 +14,7 @@ public class Mapper {
         taskDtoOut.setDepartment(task.getDepartment());
         taskDtoOut.setDescription(task.getDescription());
         taskDtoOut.setPowerConsumers(task.getPowerConsumers());
-//        taskDtoOut.setUserIssued(task.getUserIssued());
+        taskDtoOut.setUserIssued(convertUserToUserDto(task.getUserIssued()));
         taskDtoOut.setIssuedAt(task.getIssuedAt());
         taskDtoOut.setUserAccepted(convertUserToUserDto(task.getUserAccepted()));
         taskDtoOut.setAcceptedAt(task.getAcceptedAt());

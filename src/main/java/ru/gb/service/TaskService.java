@@ -32,8 +32,8 @@ public class TaskService {
         return task;
     }
 
-    public Task addTask(TaskDto taskDto) {
-        return taskRepository.save(convertTaskDtoToTask(taskDto));
+    public Task addTask(TaskDto taskDto, String login) {
+        return taskRepository.save(convertTaskDtoToTask(taskDto, login));
     }
 
     public void deleteTask(Long id) {
@@ -81,8 +81,10 @@ public class TaskService {
         return task;
     }
 
-    private Task convertTaskDtoToTask(TaskDto taskDto) {
+    private Task convertTaskDtoToTask(TaskDto taskDto, String login) {
         User userAccepted = userService.getUserByFullName(taskDto.getUserAcceptedLastName(), taskDto.getUserAcceptedFirstName(), taskDto.getUserAcceptedPatronymic()).orElseThrow(
+                () -> new NoSuchElementException("Пользователь не найден!"));
+        User userIssued = userService.getUserByLogin(login).orElseThrow(
                 () -> new NoSuchElementException("Пользователь не найден!"));
 
         Task task = new Task();
@@ -91,6 +93,7 @@ public class TaskService {
         task.setDepartment(taskDto.getDepartment());
         task.setDescription(taskDto.getDescription());
         task.setPowerConsumers(taskDto.getPowerConsumers());
+        task.setUserIssued(userIssued);
         task.setUserAccepted(userAccepted);
         return task;
     }

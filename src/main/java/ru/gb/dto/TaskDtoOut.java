@@ -17,7 +17,7 @@ public class TaskDtoOut {
     private String department;
     private String description;
     private List<PowerConsumer> powerConsumers;
-//    private UserDto userIssued;
+    private UserDto userIssued;
     private LocalDateTime issuedAt;
     private UserDto userAccepted;
     private LocalDateTime acceptedAt;
