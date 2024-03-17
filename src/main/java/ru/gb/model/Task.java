@@ -39,8 +39,8 @@ public class Task {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PowerConsumer> powerConsumers = new ArrayList<>();       // список электропотребителей
 
-//    @ManyToOne
-//    private User userIssued;    // пользователь, выдавший задание
+    @ManyToOne
+    private User userIssued;    // пользователь, выдавший задание
 
     @CreationTimestamp
     @Column(name = "issuedAt", columnDefinition = "TIMESTAMP")

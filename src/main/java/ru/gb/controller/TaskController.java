@@ -10,6 +10,7 @@ import ru.gb.mapper.Mapper;
 import ru.gb.model.Task;
 import ru.gb.service.TaskService;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -35,10 +36,10 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskDtoOut> addTask(@RequestBody TaskDto taskDto) {
+    public ResponseEntity<TaskDtoOut> addTask(@RequestBody TaskDto taskDto, Principal principal) {
         Task task;
         try {
-            task = taskService.addTask(taskDto);
+            task = taskService.addTask(taskDto, principal.getName());
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

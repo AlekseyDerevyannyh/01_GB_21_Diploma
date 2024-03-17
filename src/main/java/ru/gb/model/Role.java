@@ -2,10 +2,9 @@ package ru.gb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-//import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +14,7 @@ import java.util.Objects;
 @Table(name = "ROLES")
 @Getter
 @Setter
-//public class Role implements GrantedAuthority {
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -38,10 +36,10 @@ public class Role {
         this.name = name;
     }
 
-//    @Override
-//    public String getAuthority() {
-//        return login;
-//    }
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 
     @Override
     public boolean equals(Object o) {
