@@ -19,14 +19,14 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(registry -> registry
-                        .requestMatchers("/role/**", "/user/**").hasRole("ADMIN")
+                        .requestMatchers("/role/**", "/user/**").hasAuthority("ADMIN")
                         .requestMatchers(antMatcher(HttpMethod.GET,"/task")).authenticated()
-                        .requestMatchers(antMatcher(HttpMethod.POST,"/task")).hasRole("USER_ISSUING")
+                        .requestMatchers(antMatcher(HttpMethod.POST,"/task")).hasAuthority("USER_ISSUING")
                         .requestMatchers(antMatcher(HttpMethod.GET,"/task/**")).authenticated()
-                        .requestMatchers(antMatcher(HttpMethod.DELETE,"/task/**")).hasRole("ADMIN")
-                        .requestMatchers(antMatcher(HttpMethod.PUT,"/task/**/accept")).hasRole("USER_ACCEPTING")
-                        .requestMatchers(antMatcher(HttpMethod.PUT,"/task/**/cancel")).hasRole("USER_ISSUING")
-                        .requestMatchers(antMatcher(HttpMethod.PUT,"/task/**/complete")).hasRole("USER_ACCEPTING")
+                        .requestMatchers(antMatcher(HttpMethod.DELETE,"/task/**")).hasAuthority("ADMIN")
+                        .requestMatchers(antMatcher(HttpMethod.PUT,"/task/**/accept")).hasAuthority("USER_ACCEPTING")
+                        .requestMatchers(antMatcher(HttpMethod.PUT,"/task/**/cancel")).hasAuthority("USER_ISSUING")
+                        .requestMatchers(antMatcher(HttpMethod.PUT,"/task/**/complete")).hasAuthority("USER_ACCEPTING")
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
