@@ -1,7 +1,6 @@
 package ru.gb.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.gb.model.Role;
 import ru.gb.model.User;
@@ -14,7 +13,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -34,11 +32,8 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            throw new NoSuchElementException("Не найден пользователь с идентификатором " + id);
-        }
-        return user;
+        return userRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("Не найден пользователь с идентификатором " + id));
     }
 
     public void deleteUser(Long id) {

@@ -3,6 +3,7 @@ package ru.gb.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.dto.TaskDto;
 import ru.gb.dto.TaskDtoOut;
@@ -27,12 +28,17 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDtoOut>> getAllTasks() {
-        return new ResponseEntity<>(taskService.getAllTasks()
-                .stream()
-                .map(task -> mapper.convertTaskToTaskDtoOut(task))
-                .toList(),
-                HttpStatus.OK);
+    public ResponseEntity<List<TaskDtoOut>> getAllTasks(Principal principal) {
+        List<TaskDtoOut> tasks;
+        try {
+            tasks = taskService.getAllTasks(principal.getName())
+                    .stream()
+                    .map(task -> mapper.convertTaskToTaskDtoOut(task))
+                    .toList();
+        } catch (NoSuchElementException ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
     @PostMapping
@@ -42,17 +48,21 @@ public class TaskController {
             task = taskService.addTask(taskDto, principal.getName());
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDtoOut> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoOut> getTaskById(@PathVariable Long id, Principal principal) {
         Task task;
         try {
-            task = taskService.getTaskById(id);
+            task = taskService.getTaskById(id, principal.getName());
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (AuthorizationServiceException ex) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
@@ -64,40 +74,46 @@ public class TaskController {
     }
 
     @PutMapping("/{id}/accept")
-    public ResponseEntity<TaskDtoOut> acceptTask(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoOut> acceptTask(@PathVariable Long id, Principal principal) {
         Task task;
         try {
-            task = taskService.acceptTask(id);
+            task = taskService.acceptTask(id, principal.getName());
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (AuthorizationServiceException ex) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
 
     @PutMapping("/{id}/cancel")
-    public ResponseEntity<TaskDtoOut> cancelTask(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoOut> cancelTask(@PathVariable Long id, Principal principal) {
         Task task;
         try {
-            task = taskService.cancelTask(id);
+            task = taskService.cancelTask(id, principal.getName());
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (AuthorizationServiceException ex) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
 
     @PutMapping("/{id}/complete")
-    public ResponseEntity<TaskDtoOut> completeTask(@PathVariable Long id) {
+    public ResponseEntity<TaskDtoOut> completeTask(@PathVariable Long id, Principal principal) {
         Task task;
         try {
-            task = taskService.completeTask(id);
+            task = taskService.completeTask(id, principal.getName());
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+        } catch (AuthorizationServiceException ex) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
