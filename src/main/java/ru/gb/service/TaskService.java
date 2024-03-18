@@ -35,7 +35,7 @@ public class TaskService {
                 || task.getUserIssued().equals(user)) {
             return task;
         }
-        throw new AuthorizationServiceException("Не прав для просмотра данного задания данным пользователем");
+        throw new AuthorizationServiceException("Нет прав для просмотра данного задания данным пользователем");
     }
 
     public Task addTask(TaskDto taskDto, String login) {
