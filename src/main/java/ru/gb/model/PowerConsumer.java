@@ -28,7 +28,7 @@ public class PowerConsumer {
     private String location;            // расположение потребителя (№ помещения на плане)
 
     @Column(name = "power")
-    private Integer power;              // мощность, кВт
+    private Integer power;              // мощность, Вт
 
     @Column(name = "voltage")
     private Integer voltage;            // напряжение, В
