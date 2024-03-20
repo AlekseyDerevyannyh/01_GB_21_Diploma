@@ -1,21 +1,17 @@
 package ru.gb.repository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import ru.gb.model.Role;
 import ru.gb.model.User;
 import ru.gb.service.RoleService;
-import ru.gb.service.TaskService;
 import ru.gb.service.UserService;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class DataLoader implements ApplicationRunner {
-    private final TaskService taskService;
     private final UserService userService;
     private final RoleService roleService;
 
@@ -39,6 +35,5 @@ public class DataLoader implements ApplicationRunner {
         userService.addRoleToUser("Pushkin", "Aleksandr", "Sergeevich", "USER_ISSUING");
         userService.addRoleToUser("Sidorov", "Aleksey", "Konstantinovich", "USER_ACCEPTING");
         userService.addRoleToUser("Nekrasov", "Nikolay", "Alekseevich", "USER_ACCEPTING");
-
     }
 }

@@ -1,9 +1,7 @@
 package ru.gb.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -35,10 +33,6 @@ public class PowerConsumer {
 
     @Column(name = "power_factor")
     private Double powerFactor;         // коэффициент мощности (cos(Fi))
-
-//    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-//    @JoinColumn(name = "task_id", nullable = false)
-//    private Task task;
 
     public PowerConsumer() {}
 }

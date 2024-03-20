@@ -117,5 +117,4 @@ public class TaskController {
         }
         return new ResponseEntity<>(mapper.convertTaskToTaskDtoOut(task), HttpStatus.OK);
     }
-
 }

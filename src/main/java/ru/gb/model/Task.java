@@ -1,7 +1,6 @@
 package ru.gb.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -34,8 +33,6 @@ public class Task {
     @Column(name = "description", nullable = false)
     private String description; // описание задания
 
-//    @OneToMany
-//    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PowerConsumer> powerConsumers = new ArrayList<>();       // список электропотребителей
 
@@ -59,7 +56,6 @@ public class Task {
     private LocalDateTime completedAt;     // дата завершения работ по заданию
 
     @Column(name = "status")
-//    @Enumerated(EnumType.STRING)
     private Status status = Status.CREATED;  // статус задания
 
     public Task() {}

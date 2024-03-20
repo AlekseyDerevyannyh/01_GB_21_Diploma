@@ -22,7 +22,6 @@ public class Role implements GrantedAuthority {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-//    @Column(name = "users")
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER,
         cascade = CascadeType.ALL,
