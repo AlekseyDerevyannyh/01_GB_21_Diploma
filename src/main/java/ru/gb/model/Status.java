@@ -1,8 +1,8 @@
 package ru.gb.model;
 
 public enum Status {
-    CREATED,
-    ACCEPTED,
-    CANCELED,
-    COMPLETED
+    CREATED,    // Создано
+    ACCEPTED,   // Принято
+    CANCELED,   // Отменено
+    COMPLETED   // Выполнено
 }

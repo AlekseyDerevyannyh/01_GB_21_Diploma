@@ -1,5 +1,6 @@
 # Курс "Веб-разработка на Java"
 ## Дипломная работа
+### Разработка back-end службы выдачи и регистрации заданий на электроснабжение электротехническому отделу в проектной организации
 * **
 ### Автор:
 Деревянных Алексей
@@ -17,4 +18,4 @@ ENV POSTGRES_PASSWORD secret
 docker build -t task-db .
 docker run --name task-db -p 5432:5432 -d task-db
 ```
-Соответствующие параметры подключения приложения к БД были прописаны в файле **./src/main/resources/application.yml**
+Соответствующие параметры подключения приложения к БД были прописаны в файле **[./src/main/resources/application.yml](./src/main/resources/application.yml)**
