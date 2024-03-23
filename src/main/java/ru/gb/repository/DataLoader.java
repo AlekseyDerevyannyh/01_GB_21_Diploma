@@ -23,17 +23,17 @@ public class DataLoader implements ApplicationRunner {
         roleService.addRole(new Role("USER_ACCEPTING"));
 
         userService.addUser(new User("admin", "admin", "Ivanov", "Ivan", "Ivanovich"));
-        userService.addUser(new User("manager", "admin", "Petrov", "Pyotr", "Petrovich"));
-        userService.addUser(new User("user_issuing", "admin", "Sokolov", "Pavel", "Aleksandrovich"));
-        userService.addUser(new User("user_issuing1", "admin", "Pushkin", "Aleksandr", "Sergeevich"));
-        userService.addUser(new User("user_accepting", "admin", "Sidorov", "Aleksey", "Konstantinovich"));
-        userService.addUser(new User("user_accepting1", "admin", "Nekrasov", "Nikolay", "Alekseevich"));
-
-        userService.addRoleToUser("Ivanov", "Ivan", "Ivanovich", "ADMIN");
-        userService.addRoleToUser("Petrov", "Pyotr", "Petrovich", "MANAGER");
-        userService.addRoleToUser("Sokolov", "Pavel", "Aleksandrovich", "USER_ISSUING");
-        userService.addRoleToUser("Pushkin", "Aleksandr", "Sergeevich", "USER_ISSUING");
-        userService.addRoleToUser("Sidorov", "Aleksey", "Konstantinovich", "USER_ACCEPTING");
-        userService.addRoleToUser("Nekrasov", "Nikolay", "Alekseevich", "USER_ACCEPTING");
+//        userService.addUser(new User("manager", "admin", "Petrov", "Pyotr", "Petrovich"));
+//        userService.addUser(new User("user_issuing", "admin", "Sokolov", "Pavel", "Aleksandrovich"));
+//        userService.addUser(new User("user_issuing1", "admin", "Pushkin", "Aleksandr", "Sergeevich"));
+//        userService.addUser(new User("user_accepting", "admin", "Sidorov", "Aleksey", "Konstantinovich"));
+//        userService.addUser(new User("user_accepting1", "admin", "Nekrasov", "Nikolay", "Alekseevich"));
+//
+//        userService.addRoleToUser("Ivanov", "Ivan", "Ivanovich", "ADMIN");
+//        userService.addRoleToUser("Petrov", "Pyotr", "Petrovich", "MANAGER");
+//        userService.addRoleToUser("Sokolov", "Pavel", "Aleksandrovich", "USER_ISSUING");
+//        userService.addRoleToUser("Pushkin", "Aleksandr", "Sergeevich", "USER_ISSUING");
+//        userService.addRoleToUser("Sidorov", "Aleksey", "Konstantinovich", "USER_ACCEPTING");
+//        userService.addRoleToUser("Nekrasov", "Nikolay", "Alekseevich", "USER_ACCEPTING");
     }
 }

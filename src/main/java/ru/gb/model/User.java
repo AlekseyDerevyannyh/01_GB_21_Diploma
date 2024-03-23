@@ -15,22 +15,22 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long id;            // идентификатор сотрудника
 
     @Column(name = "login", nullable = false, unique = true)
-    private String login;
+    private String login;       // логин сотрудника
 
     @Column(name = "password", nullable = false)
-    private String password;
+    private String password;    // пароль сотрудника
 
     @Column(name = "last_name", nullable = false)
-    private String lastName;
+    private String lastName;    // фамилия сотрудника
 
     @Column(name = "first_name", nullable = false)
-    private String firstName;
+    private String firstName;   // имя сотрудника
 
     @Column(name = "patronymic", nullable = false)
-    private String patronymic;
+    private String patronymic;  // отчество сотрудника
 
     @ManyToMany(fetch = FetchType.EAGER,
         cascade = CascadeType.ALL)
@@ -38,7 +38,7 @@ public class User {
             name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();   // список ролей сотрудника
 
     public User() {
     }
