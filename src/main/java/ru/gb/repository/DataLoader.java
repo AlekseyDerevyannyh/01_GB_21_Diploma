@@ -29,7 +29,7 @@ public class DataLoader implements ApplicationRunner {
 //        userService.addUser(new User("user_accepting", "admin", "Sidorov", "Aleksey", "Konstantinovich"));
 //        userService.addUser(new User("user_accepting1", "admin", "Nekrasov", "Nikolay", "Alekseevich"));
 //
-//        userService.addRoleToUser("Ivanov", "Ivan", "Ivanovich", "ADMIN");
+        userService.addRoleToUser("Ivanov", "Ivan", "Ivanovich", "ADMIN");
 //        userService.addRoleToUser("Petrov", "Pyotr", "Petrovich", "MANAGER");
 //        userService.addRoleToUser("Sokolov", "Pavel", "Aleksandrovich", "USER_ISSUING");
 //        userService.addRoleToUser("Pushkin", "Aleksandr", "Sergeevich", "USER_ISSUING");
