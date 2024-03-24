@@ -1,0 +1,29 @@
+---
+version: "3.8"
+
+services:
+  db:
+    image: postgres:13.2-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: task
+      POSTGRES_USER: task
+      POSTGRES_PASSWORD: secret
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  app:
+    build:
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/task"
+      SPRING_JPA_HIBERNATE_DDL-AUTO: "create-drop"
